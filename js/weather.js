@@ -1,8 +1,24 @@
+const weather = document.querySelector(".weatherJS");
+
 // OpenWeather API KEY
 const api_key = "87fcb1c8245b4ec6d2682142985542fa";
 
 // coords : 좌표 값 읽기
 const coords = "coords";
+
+function getWeather(lat, lng) {
+  fetch(
+    `http://api.openweathermap.org/data/2.5/weather?lat=${lat}&lon=${lng}&appid=${api_key}&units=metric`
+  )
+    .then(function(response) {
+      return response.json();
+    })
+    .then(function(json) {
+      const temperature = json.main.temp;
+      const place = json.name;
+      weather.innerText = `${temperature} @ ${place}`;
+    });
+}
 
 function saveCoords(coordsObj) {
   localStorage.setItem(coords, JSON.stringify(coordsObj));
@@ -17,6 +33,8 @@ function handleGeoSucces(position) {
     longitude
   };
   saveCoords(coordsObj);
+
+  getWeather(latitude, longitude);
 }
 
 function handleGeoError() {
@@ -29,9 +47,12 @@ function askForCoords() {
 function loadCoords() {
   const loadedCoords = localStorage.getItem(coords);
   if (loadedCoords === null) {
+    // 좌표값이 없을 때 실행
     askForCoords();
   } else {
-    // getWeather
+    // 좌표값이 있을 때 실행
+    const parsedCoords = JSON.parse(loadedCoords);
+    getWeather(parsedCoords.latitude, parsedCoords.longitude);
   }
 }
 
