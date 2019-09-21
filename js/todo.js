@@ -2,18 +2,17 @@ const todoForm = document.querySelector(".todoFormJs");
 const todoInput = todoForm.querySelector("input");
 const todoList = document.querySelector(".todoList");
 const todos_ls = "todos";
-const toDos = [];
-
-function filterFn(todo) {
-  return todo.id === 1;
-}
+let toDos = [];
 
 function deleteTodo(event) {
   const btn = event.target;
   const li = btn.parentNode;
-
   todoList.removeChild(li);
-  const cleanTodos = todo.filter(filterFn);
+  const cleanTodos = toDos.filter(function(todo) {
+    return todo.id !== parseInt(li.id);
+  });
+  toDos = cleanTodos;
+  saveTodos();
 }
 
 function saveTodos() {
