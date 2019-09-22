@@ -4,7 +4,7 @@ const img_number = 4;
 
 function paintImg(imgNumber) {
   const img = new Image();
-  img.src = `../img/${imgNumber + 1}.jpg`;
+  img.src = `../img/momonton_img/${imgNumber + 1}.jpg`;
   img.classList.add("backGroundImg");
   body.appendChild(img);
 }
