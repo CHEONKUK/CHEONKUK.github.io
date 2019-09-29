@@ -17,7 +17,16 @@ function startPainting() {
 function onMouseMove(event) {
   const x = event.offsetX;
   const y = event.offsetY;
-  // 5:48 시작하기
+  // 여기서 모든 움직임을 감지하고 라인을 만들어야 함
+  // path 를 만드는 건 기본적으로 line의 시작점을 만드는 것
+
+  if (!painting) {
+    ctx.beginPath();
+    ctx.moveTo(x, y);
+  } else {
+    ctx.lineTo(x, y);
+    ctx.stroke();
+  }
 }
 
 function onMouseDown(event) {
@@ -26,7 +35,7 @@ function onMouseDown(event) {
 
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
-  canvas.addEventListener("mousedown", onMouseDown);
+  canvas.addEventListener("mousedown", startPainting);
   canvas.addEventListener("mouseup", stopPainting);
   canvas.addEventListener("mouseleave", stopPainting);
 }
