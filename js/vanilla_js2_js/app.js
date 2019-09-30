@@ -8,12 +8,17 @@ const colors = document.getElementsByClassName("jsColor");
 const range = document.getElementById("jsRange");
 
 const mode = document.getElementById("jsMode");
+const INITTAL_COLOR = "#2c2c2c";
+const CANVAS_SIZE = 700;
 
-canvas.width = 700;
-canvas.height = 700;
+canvas.width = CANVAS_SIZE;
+canvas.height = CANVAS_SIZE;
 
-ctx.strokeStyle = "#2c2c2c";
+ctx.strokeStyle = INITTAL_COLOR;
 ctx.lineWidth = 2.5;
+
+// ctx.fillRect( x좌표, y좌표, 가로, 세로);
+ctx.fillStyle = INITTAL_COLOR;
 
 let painting = false;
 let filling = false;
@@ -53,6 +58,7 @@ function handelColorClick(event) {
 
   // strockeStyle을 override
   ctx.strokeStyle = color;
+  ctx.fillStyle = color;
 }
 
 function handleRangeCheange(event) {
@@ -73,11 +79,18 @@ function handleModeClick() {
   }
 }
 
+function handleCanvasClick() {
+  if (filling) {
+    ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
+  }
+}
+
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("mousedown", startPainting);
   canvas.addEventListener("mouseup", stopPainting);
   canvas.addEventListener("mouseleave", stopPainting);
+  canvas.addEventListener("click", handleCanvasClick);
 }
 
 // Array.from = ovject로 부터 array를 만듬
