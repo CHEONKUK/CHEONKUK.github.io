@@ -11,8 +11,13 @@ const mode = document.getElementById("jsMode");
 const INITTAL_COLOR = "#2c2c2c";
 const CANVAS_SIZE = 700;
 
+const saveBtn = document.getElementById("jsSave");
+
 canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
+
+ctx.fillStyle = "white";
+ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
 ctx.strokeStyle = INITTAL_COLOR;
 ctx.lineWidth = 2.5;
@@ -85,12 +90,27 @@ function handleCanvasClick() {
   }
 }
 
+// 우클릭 방지
+function handleContextMenu(event) {
+  event.preventDefault();
+}
+
+function handleSaveClick() {
+  // (기본적으로 PNG로 설정 된)Type parameter에 의해 저장된 포맷의 이미지표현을 포함한 dataURL을 반환
+  const img = canvas.toDataURL();
+  const link = document.createElement("a");
+  link.href = img;
+  link.download = "paintJS_Success";
+  link.click();
+}
+
 if (canvas) {
   canvas.addEventListener("mousemove", onMouseMove);
   canvas.addEventListener("mousedown", startPainting);
   canvas.addEventListener("mouseup", stopPainting);
   canvas.addEventListener("mouseleave", stopPainting);
   canvas.addEventListener("click", handleCanvasClick);
+  canvas.addEventListener("contextmenu", handleContextMenu);
 }
 
 // Array.from = ovject로 부터 array를 만듬
@@ -105,4 +125,8 @@ if (range) {
 
 if (mode) {
   mode.addEventListener("click", handleModeClick);
+}
+
+if (saveBtn) {
+  saveBtn.addEventListener("click", handleSaveClick);
 }
