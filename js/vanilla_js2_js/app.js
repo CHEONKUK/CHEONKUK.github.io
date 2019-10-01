@@ -17,12 +17,12 @@ canvas.width = CANVAS_SIZE;
 canvas.height = CANVAS_SIZE;
 
 ctx.fillStyle = "white";
+// ctx.fillRect( x좌표, y좌표, 가로, 세로);
 ctx.fillRect(0, 0, CANVAS_SIZE, CANVAS_SIZE);
 
 ctx.strokeStyle = INITTAL_COLOR;
 ctx.lineWidth = 2.5;
 
-// ctx.fillRect( x좌표, y좌표, 가로, 세로);
 ctx.fillStyle = INITTAL_COLOR;
 
 let painting = false;
