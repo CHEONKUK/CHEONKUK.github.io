@@ -6,14 +6,14 @@ const BoundaryHOC = ProtectedComponent =>
       hasError: false
     };
 
-    componentDidCatch = () => {
+    componentDidCatch = (error, info) => {
       this.setState({
         hasError: true
       });
     };
 
     render() {
-      const { hasError } = this.setState;
+      const { hasError } = this.state;
       if (hasError) {
         return <ErrorFallback />;
       } else {
@@ -22,16 +22,20 @@ const BoundaryHOC = ProtectedComponent =>
     }
   };
 
-const ErrorFallback = () => "Error ! ";
+const ErrorFallback = () => `  ##  Error  ##  `;
 
 class ErrorMaker extends Component {
   state = {
     name: ["A", "B", "C", "D"]
   };
 
+  componentDidMount = () => {
+    this.setState({ name: undefined });
+  };
+
   render() {
     const { name } = this.state;
-    const names = name.map(name => <p>{name}</p>);
+    const names = name.map(name => ` ${name} `);
 
     return (
       <>
@@ -43,12 +47,24 @@ class ErrorMaker extends Component {
 
 const P_ErrorMaker = BoundaryHOC(ErrorMaker);
 
+class ReturnType extends Component {
+  render() {
+    return "String Type";
+  }
+}
+const P_ReturnType = BoundaryHOC(ReturnType);
+
 class App extends Component {
+  state = {
+    hasError: false
+  };
+
   render() {
     return (
       <>
         <div>React16</div>
-        <ErrorMaker />
+        <P_ReturnType />
+        <P_ErrorMaker />
       </>
     );
   }
