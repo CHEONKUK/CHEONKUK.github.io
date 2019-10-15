@@ -30,7 +30,7 @@ class ErrorMaker extends Component {
   };
 
   componentDidMount = () => {
-    this.setState({ name: undefined });
+    // this.setState({ name: undefined });
   };
 
   render() {
@@ -54,6 +54,34 @@ class ReturnType extends Component {
 }
 const P_ReturnType = BoundaryHOC(ReturnType);
 
+const eatPizza = state => {
+  const { pizza } = state;
+  const maxPizza = 20;
+
+  if (pizza < maxPizza) {
+    return { pizza: pizza + 1 };
+  } else {
+    return null;
+  }
+};
+
+class Pizza extends Component {
+  handleClick = () => {
+    this.setState(eatPizza);
+  };
+
+  state = {
+    pizza: 0
+  };
+
+  render() {
+    const { pizza } = this.state;
+    return (
+      <button onClick={this.handleClick}> I have eaten {pizza} pizza </button>
+    );
+  }
+}
+
 class App extends Component {
   state = {
     hasError: false
@@ -65,6 +93,7 @@ class App extends Component {
         <div>React16</div>
         <P_ReturnType />
         <P_ErrorMaker />
+        <Pizza />
       </>
     );
   }
